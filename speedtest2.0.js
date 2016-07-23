@@ -2,17 +2,15 @@
 var i= 1;
     
 
-var imageAddr=["https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/Towin.jpg"];
-var downloadsize =[125950,125950,125950,125950,125950];
-function restart()
-        {
-            if(imageAddr < 5)
-                {   
-                i++;
-                InitiateSpeedDetection();
-                }
+var imageAddr=["https://upload.wikimedia.org/wikipedia/commons/e/e3/Tennessee_Hibiscus.JPG","https://upload.wikimedia.org/wikipedia/commons/7/71/2005-malabar-parkeet-p.jpg","https://upload.wikimedia.org/wikipedia/commons/8/8c/Biltmore_Estate-27527-2.jpg","https://upload.wikimedia.org/wikipedia/commons/7/71/Aerial_view_of_Love_valley_Cappadocia_from_hot_air_balloon_1510232_3_4_Compressor.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3f/Sun_pillar_and_kitesurfers.jpg"];
 
-        }
+
+var downloadSize = [7848555,67520,1609200,1569303,975171]; //bytes
+var average=[];
+var avg = 0;
+var total = 0;
+var i = 0;
+
 
 function ShowProgressMessage(msg) {
     if (console) {
@@ -44,7 +42,7 @@ function InitiateSpeedDetection() {
 if (window.addEventListener) {
     window.addEventListener('click', InitiateSpeedDetection, false);
 } else if (window.attachEvent) {
-    window.attachEvent('onclick', restart);
+    window.attachEvent('onclick', InitiateSpeedDetection);
 }
 
 
@@ -64,20 +62,19 @@ function MeasureConnectionSpeed() {
     startTime = (new Date()).getTime();
     var cacheBuster = "?nnn=" + startTime;
     download.src = imageAddr[i] + cacheBuster;
-
+     
 
         
 
     function showResults() {
         var duration = (endTime - startTime) / 1000;
-        var bitsLoaded = downloadsize[i] * 8;
+        var bitsLoaded = downloadSize[i] * 8;
         var speedBps = (bitsLoaded / duration).toFixed(2);
         var speedKbps = (speedBps / 1024).toFixed(2);
         var speedMbps = (speedKbps / 1024).toFixed(2);
+        var count = (i+1);
+        var runs = 4;
         var avg = (total/average.length);
-        
-        
-        
         average.push(speedMbps);
         total += parseFloat(average[i]);
     
@@ -89,8 +86,15 @@ function MeasureConnectionSpeed() {
             speedKbps + " kbps \n", 
             speedMbps + " Mbps \n"
         ]);
-            window.alert("Your connection speed is: \n" + speedBps + " bps \n" + speedKbps + " kbps \n"  + speedMbps + " Mbps \n" + "Count: " + i + "\nAverage: " + avg + 
-             "\nTotal: " + total + test[i])
-            restart();
+            window.alert("Your connection speed is: \n" + speedBps + " bps \n" + speedKbps + " kbps \n"  + speedMbps + " Mbps \n" + "Count: " + count + "\nAverage: " + avg + 
+             "\nTotal: " + total)
+            
+            
+        if(i < runs)
+        {        
+        i++;
+        InitiateSpeedDetection();
+         
+       }        
     }
 }

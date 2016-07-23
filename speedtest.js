@@ -69,6 +69,7 @@ function MeasureConnectionSpeed() {
         var speedKbps = (speedBps / 1024).toFixed(2);
         var speedMbps = (speedKbps / 1024).toFixed(2);
         var count = (i+1);
+        var runs = 2;
         var avg = (total/average.length);
         average.push(speedMbps);
         total += parseFloat(average[i]);
@@ -85,7 +86,7 @@ function MeasureConnectionSpeed() {
              "\nTotal: " + total)
             
             
-        if(i < 3)
+        if(i < runs)
         {        
         i++;
         InitiateSpeedDetection();
